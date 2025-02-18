@@ -1,0 +1,30 @@
+services:
+    www:
+        build: .
+        container_name: symfony
+        depends_on:
+            - db
+        ports:
+            - "8080:80"
+        volumes:
+            - .:/var/www/html
+        restart: always
+        networks:
+            - test-technique
+
+    db:
+        image: mysql
+        container_name: database
+        ports:
+            - 3306:3306
+        restart: always
+        environment:
+            MYSQL_DATABASE: test-technique
+            MYSQL_USER: test-technique
+            MYSQL_PASSWORD: myV3ry53cr3tP455w0rd
+            MYSQL_ROOT_PASSWORD: myV3ry53cr3tR00tP455w0rd
+        networks:
+            - test-technique
+
+networks:
+    test-technique:

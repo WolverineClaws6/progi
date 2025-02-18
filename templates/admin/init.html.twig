@@ -1,0 +1,5 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<pre>{{ output|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+{% endblock %}

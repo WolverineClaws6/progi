@@ -1,0 +1,124 @@
+html {
+	background: linear-gradient(
+		-45deg,
+		var(--gradient_color_1),
+		var(--gradient_color_2),
+		var(--gradient_color_3),
+		var(--gradient_color_4)
+	);
+	background-size: 400% 400%;
+	animation: gradient var(--gradient_speed) ease infinite;
+	font-family: "Poppins", serif;
+
+	body {
+		display: flex;
+		justify-content: center;
+
+		#app {
+			background: rgba(255, 255, 255, 0.2);
+			border-radius: 1rem;
+			box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+			backdrop-filter: blur(var(--blur));
+			border: 1px solid rgba(255, 255, 255, 0.5);
+			padding: 3vw;
+			max-width: 90%;
+
+			nav {
+				display: flex;
+				justify-content: flex-end;
+
+				a {
+					border-radius: 100%;
+					padding: 0.5em;
+					font-weight: 700;
+					border: 1px solid white;
+					color: black;
+					width: 3em;
+					height: 3em;
+					text-align: center;
+					vertical-align: middle;
+					line-height: 2em;
+
+					&:hover {
+						background-color: white;
+					}
+				}
+			}
+
+			form {
+				display: flex;
+				justify-content: space-between;
+				flex-direction: column;
+				section,
+				#fee_fees {
+					display: flex;
+					justify-content: center;
+					flex-direction: row;
+					width: 90%;
+				}
+
+				section {
+					margin: 2rem 0;
+				}
+
+				div:has(> label) {
+					display: flex;
+					justify-content: center;
+					flex-direction: column;
+					padding: 0 1em;
+				}
+				label {
+					color: white;
+				}
+
+				input[type="text"] {
+					text-align: center;
+					font-size: 2rem;
+					font-weight: bold;
+					border: 1px solid rgba(255, 255, 255, 0.5);
+					border-radius: 1rem;
+					width: 12rem;
+				}
+
+				#fee_price {
+					width: 20rem;
+				}
+
+				input[readonly] {
+					pointer-events: none;
+				}
+
+				select {
+					cursor: pointer;
+					text-align: center;
+					font-size: 1rem;
+					font-weight: bold;
+					border: 1px solid rgba(255, 255, 255, 0.5);
+					border-radius: 1rem;
+					padding: 0.75rem;
+				}
+
+				#fee_price {
+					background-color: white;
+				}
+
+				#total {
+					label {
+						font-size: 3rem;
+						font-weight: 700;
+					}
+
+					& > div {
+						width: 100%;
+
+						#fee_total {
+							font-size: 3rem;
+							border: none;
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
+}

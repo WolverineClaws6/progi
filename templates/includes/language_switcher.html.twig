@@ -1,0 +1,10 @@
+{% block language_switcher %}
+{% set locales = ['fr', 'en'] %}
+<nav>
+	{% for locale in locales %}
+		{% if locale is not same as(app.request.locale) %}
+			<a href="/{{ (locale is not same as(app.request.defaultLocale)) ? locale ~ "/" : "" }}">{{ locale|upper }}</a>
+		{% endif %}
+	{% endfor %}
+</nav>
+{% endblock %}

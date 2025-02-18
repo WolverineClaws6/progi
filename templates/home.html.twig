@@ -1,0 +1,109 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	{% block app %}
+		<main id='app'>
+			{% include "includes/language_switcher.html.twig" %}
+			{{ form_start(form) }}
+				<section id="entry">
+					{{ form_row(form.category) }}
+					{{ form_row(form.price) }}
+				</section>
+				<section id="fees">
+					{{ form_row(form.fees) }}
+				</section>
+				<section id="total">
+					{{ form_row(form.total) }}
+				</section>
+			{{ form_end(form) }}
+		</main>
+	{% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		const clamp = (val, min = 0, max = 1) => Math.max(min, Math.min(max, val));
+		const percent = (val, percent = 100) => val / 100 * percent;
+		const toFloat = (val) => parseFloat(String(val).replace(/\s+/g, '')).toFixed(2);
+		const reverse = (str) => str.split("").reverse().join("");
+		function prettify(str) {
+			split = str.split('.');
+			return reverse(reverse(split[0]).replace(/(.{3})/g,"$1 "))+ "." + split[1] + "$";
+		}
+
+		const { createApp, ref } = Vue
+		const app = createApp({
+			data(){
+				return {
+					category: "",
+					price: prettify(toFloat(0)),
+					association: prettify(toFloat(0)),
+					base: prettify(toFloat(0)),
+					special: prettify(toFloat(0)),
+					storage: prettify(toFloat(0)),
+					total: prettify(toFloat(0)),
+				}
+			},
+			compilerOptions: {
+				delimiters: ["{$", "$}"],
+			},
+
+			watch:{
+				category: {
+					handler: function() {
+						this.calculate();
+					},
+					deep: true
+				},
+				price: {
+					handler: function() {
+						this.calculate();
+					},
+					deep: true
+				},
+			},
+
+			methods: {
+				calculate(){
+					let price = toFloat(this.price);
+					switch(this.category){
+						case "regular":
+							this.base = prettify(toFloat(clamp(percent(price, 10), 10, 50)));
+							this.special = prettify(toFloat(percent(price, 2)));
+							break;
+						case "luxurious":
+							this.base = prettify(toFloat(clamp(percent(price, 10), 25, 200)));
+							this.special = prettify(toFloat(percent(price, 4)));
+							break;
+					}
+
+
+					this.association = prettify(toFloat(((price > 1)
+						? (
+							(price > 500)
+							? (
+								(price > 1000)
+								? (
+									(price > 3000)
+									? 20
+									: 15
+								)
+								: 10
+							)
+							: 5
+						)
+						: 0
+					)));
+
+					this.storage = prettify(toFloat(100));
+
+					total = toFloat(parseFloat(toFloat(price)) + parseFloat(toFloat(this.base)) + parseFloat(toFloat(this.special)) + parseFloat(toFloat(this.association)) + parseFloat(toFloat(this.storage)));
+
+					this.total = prettify(total);
+				}
+			}
+		})
+		.mount("#app");
+	</script>
+{% endblock %}

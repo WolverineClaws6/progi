@@ -1,0 +1,9 @@
+:root {
+	--gradient_speed: 90s;
+	--gradient_color_1: #ee7752;
+	--gradient_color_2: #e73c7e;
+	--gradient_color_3: #23a6d5;
+	--gradient_color_4: #23d5ab;
+
+	--blur: 6px;
+}
